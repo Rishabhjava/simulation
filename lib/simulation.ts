@@ -1,13 +1,4 @@
-interface SimulationParams {
-  numStations: number;
-  arrivalRate: number;  // per minute
-  mu1: number;         // seconds
-  sigma1: number;      // seconds
-  mu2: number;         // seconds
-  sigma2: number;      // seconds
-  screenProb: number;
-  simulationTime: number; // seconds
-}
+import { SimParams, SimResults, TimeSeriesPoint, WaitingTimeDistribution } from '../src/types';
 
 interface Traveler {
   arrivalTime: number;
@@ -21,30 +12,6 @@ interface Station {
   remainingTime: number;
   traveler: Traveler | null;
   queue: Traveler[];
-}
-
-interface TimeSeriesPoint {
-  time: number;
-  queueLengths: number[];  // One per primary station
-  seniorQueueLength: number;
-  totalQueueLength: number;
-}
-
-interface WaitingTimeDistribution {
-  bins: number[];
-  counts: number[];
-}
-
-interface SimulationResult {
-  timeSeries: TimeSeriesPoint[];
-  avgWaitingTime: number;
-  maxQueueLength: number;
-  utilization: number;
-  avgQueueLength: number;
-  avgSystemTime: number;
-  waitingTimeDistribution: WaitingTimeDistribution;
-  perStationUtilization: number[];
-  seniorUtilization: number;
 }
 
 const truncatedNormal = (mu: number, sigma: number): number => {
@@ -74,7 +41,7 @@ const calculateWaitingTimeDistribution = (waitingTimes: number[]): WaitingTimeDi
   return { bins, counts };
 };
 
-export const runSimulation = (params: SimulationParams): SimulationResult => {
+export const runSimulation = (params: SimParams): SimResults => {
   const {
     numStations,
     arrivalRate,

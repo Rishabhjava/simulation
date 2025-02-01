@@ -15,6 +15,7 @@ import {
 } from 'chart.js';
 import { runSimulation } from '../../lib/simulation';
 import { calculateTheoretical, TheoreticalResultsPanel } from '../components/TheoreticalResults';
+import { SimParams, SimResults, TheoreticalResults } from '../types';
 
 ChartJS.register(
   CategoryScale,
@@ -26,44 +27,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-interface SimParams {
-  numStations: number;
-  arrivalRate: number;
-  mu1: number;
-  sigma1: number;
-  mu2: number;
-  sigma2: number;
-  screenProb: number;
-  simulationTime: number;
-}
-
-interface SimResults {
-  timeSeries: Array<{
-    time: number;
-    queueLengths: number[];
-    seniorQueueLength: number;
-    totalQueueLength: number;
-  }>;
-  avgWaitingTime: number;
-  maxQueueLength: number;
-  utilization: number;
-  avgQueueLength: number;
-  avgSystemTime: number;
-  waitingTimeDistribution: {
-    bins: number[];
-    counts: number[];
-  };
-  perStationUtilization: number[];
-  seniorUtilization: number;
-}
-
-interface TheoreticalResults {
-  utilization: number;
-  avgQueueLength: number;
-  avgWaitTime: number;
-  avgSystemTime: number;
-}
 
 export default function Home() {
   const defaultParams: SimParams = {
